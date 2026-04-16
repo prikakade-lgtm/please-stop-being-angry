@@ -1,5 +1,6 @@
 import streamlit as st
 import random
+import time
 
 st.set_page_config(page_title="for u 😶", layout="centered")
 
@@ -19,10 +20,6 @@ html, body, .stApp {
     margin: auto;
     text-align: center;
     padding-top: 2rem;
-}
-
-p, div, span, label {
-    color: #333 !important;
 }
 
 h1 { color: #ff4d6d; }
@@ -57,7 +54,7 @@ if st.session_state.page == "home":
 
     st.image("https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif", width=180)
 
-    st.write("i know you’re mad… but click this.")
+    st.write("okay listen… just click this.")
 
     if st.button("okay fine 🙄", key="home_btn"):
         st.session_state.page = "step1"
@@ -67,7 +64,7 @@ if st.session_state.page == "home":
 
 # ---- STEP 1 ----
 elif st.session_state.page == "step1":
-    st.markdown("<h2>step 1 🌸</h2>", unsafe_allow_html=True)
+    st.markdown("<h2>wait…</h2>", unsafe_allow_html=True)
 
     st.image("https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif", width=200)
 
@@ -81,7 +78,7 @@ elif st.session_state.page == "step1":
 
 # ---- STEP 2 ----
 elif st.session_state.page == "step2":
-    st.markdown("<h2>important question 🧠</h2>", unsafe_allow_html=True)
+    st.markdown("<h2>one question 🧠</h2>", unsafe_allow_html=True)
 
     st.write("do you miss me?")
 
@@ -99,10 +96,16 @@ elif st.session_state.page == "step2":
         st.session_state.submitted = True
 
     if st.session_state.submitted:
-        st.write("analysis complete 🧠")
+
+        if choice.startswith("no"):
+            st.write("be serious for one second 😭")
+        elif choice.startswith("maybe"):
+            st.write("hmm… progress.")
+        else:
+            st.write("yeah exactly.")
+
         st.write("you are still emotionally attached 🤨")
 
-        # bring back personality lines
         st.write(random.choice([
             "don’t be dramatic 🙄",
             "this is a safe space (for you to stop being mad)",
@@ -115,11 +118,17 @@ elif st.session_state.page == "step2":
 
 # ---- STEP 3 ----
 elif st.session_state.page == "step3":
-    st.markdown("<h2>...</h2>", unsafe_allow_html=True)
+    st.markdown("<h2>wait…</h2>", unsafe_allow_html=True)
 
     st.image("https://media.giphy.com/media/9Y5BbDSkSTiY8/giphy.gif", width=200)
 
     st.write("i don’t like it when we’re like this.")
+
+    st.write(random.choice([
+        "i miss you btw.",
+        "this is dumb, we should not be fighting.",
+        "you’re my favorite person, even when you’re annoying."
+    ]))
 
     if st.button("fine 😶", key="step3_btn"):
         st.session_state.page = "final"
@@ -133,17 +142,40 @@ elif st.session_state.page == "final":
 
     st.image("https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif", width=220)
 
-    st.write("you know what you need to do.")
+    st.write("i don’t care about being right… i just don’t like us like this.")
 
-    # 🎵 Hotline Bling
     st.video("https://www.youtube.com/watch?v=uxpDa-c-4Mc")
 
-    if st.button("fine… i’ll call you 😒📞", key="call_btn"):
-        st.success("correct decision 😌")
-        st.balloons()
+    col1, col2 = st.columns(2)
 
-    if st.button("still thinking 🤨", key="final_think"):
-        st.write("this is getting embarrassing now.")
+    with col1:
+        if st.button("call her 📞", key="call_btn"):
+            st.session_state.page = "call"
 
-    if st.button("restart 🔄", key="restart_btn"):
-        st.session_state.page = "home"
+    with col2:
+        if st.button("be stubborn 😤", key="stubborn_btn"):
+            st.write("invalid option. try again.")
+
+    st.markdown("[📞 call me now](tel:+91 9819271926)")
+
+# ---- INCOMING CALL SCREEN ----
+elif st.session_state.page == "call":
+    st.markdown("<h1>📞 incoming call…</h1>", unsafe_allow_html=True)
+
+    st.image("https://media.giphy.com/media/3o6ZtaO9BZHcOjmErm/giphy.gif", width=200)
+
+    st.write("you have no choice now 😌")
+
+    time.sleep(1)
+    st.write("connecting…")
+
+    time.sleep(1)
+
+    # 💖 hearts explosion instead of balloons
+    st.markdown("""
+    <div style="font-size:40px;">
+    💖 💕 💗 💓 💞 💘 💝 💖 💕 💗
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.success("good decision. call me.")
