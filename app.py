@@ -4,15 +4,15 @@ import time
 
 st.set_page_config(page_title="for u 😶", layout="centered")
 
-# ---- CSS ----
+# ---- CSS (ONLY VISUAL FIXES) ----
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
 
 html, body, .stApp {
-    background: linear-gradient(180deg, #ffe4ec, #ffd6e0) !important;
+    background-color: #ffdce5 !important;
     font-family: 'Quicksand', sans-serif;
-    color: #333 !important;
+    color: black !important;
 }
 
 .block-container {
@@ -22,12 +22,13 @@ html, body, .stApp {
     padding-top: 2rem;
 }
 
-h1 { color: #ff4d6d; }
-h2 { color: #ff758f; }
+h1, h2, p, div, span, label {
+    color: black !important;
+}
 
 .stButton>button {
-    background-color: #ffd6e0;
-    color: #333 !important;
+    background-color: #ff4d6d;
+    color: white !important;
     border-radius: 25px;
     padding: 14px;
     width: 100%;
@@ -35,8 +36,15 @@ h2 { color: #ff758f; }
     margin-top: 10px;
 }
 
-.stButton>button:hover {
-    background-color: #ffb3c6;
+/* moving button */
+.move {
+    display: inline-block;
+    animation: float 1s infinite alternate ease-in-out;
+}
+
+@keyframes float {
+    0% { transform: translateX(-10px); }
+    100% { transform: translateX(10px); }
 }
 </style>
 """, unsafe_allow_html=True)
@@ -53,129 +61,117 @@ if st.session_state.page == "home":
     st.markdown("<h1>hey you 😤</h1>", unsafe_allow_html=True)
 
     st.image("https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif", width=180)
+    st.image("https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif", width=180)
 
-    st.write("okay listen… just click this.")
+    st.markdown('<p class="cute-text">i know you’re mad… but this is important 😔</p>', unsafe_allow_html=True)
 
-    if st.button("okay fine 🙄", key="home_btn"):
+    if st.button("okay fine 🙄"):
         st.session_state.page = "step1"
 
-    if st.button("no 😤", key="home_no"):
-        st.write("wrong answer. try again 🙄")
+    st.markdown('<div class="move">', unsafe_allow_html=True)
+    if st.button("no 😤"):
+        st.write("wrong answer. try again.")
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # ---- STEP 1 ----
 elif st.session_state.page == "step1":
-    st.markdown("<h2>wait…</h2>", unsafe_allow_html=True)
+    st.markdown("<h2>step 1 🌸</h2>", unsafe_allow_html=True)
 
     st.image("https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif", width=200)
 
-    st.write("take a deep breath 😌")
+    st.markdown('<p class="cute-text">take a deep breath 😌<br>don’t skip this.</p>', unsafe_allow_html=True)
 
-    if st.button("done 😶", key="step1_btn"):
+    if st.button("done 😶"):
         st.session_state.page = "step2"
 
-    if st.button("i refuse 😤", key="step1_refuse"):
+    st.markdown('<div class="move">', unsafe_allow_html=True)
+    if st.button("i refuse 😤"):
         st.write("you’re being dramatic again.")
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # ---- STEP 2 ----
 elif st.session_state.page == "step2":
-    st.markdown("<h2>one question 🧠</h2>", unsafe_allow_html=True)
+    st.markdown("<h2>important question 🧠</h2>", unsafe_allow_html=True)
 
-    st.write("do you miss me?")
+    st.image("https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif", width=200)
 
-    choice = st.radio(
-        "",
-        [
-            "no 😤 (lying)",
-            "maybe 😶 (hmm)",
-            "okay fine 😒 (correct)"
-        ],
-        key="radio_q"
+    st.markdown("do you miss me?")
+
+    choice = st.radio("",
+        ["no 😤", "maybe 😶", "okay fine 😒"]
     )
 
-    if st.button("submit", key="submit_btn"):
+    if st.button("submit"):
         st.session_state.submitted = True
 
     if st.session_state.submitted:
-
-        if choice.startswith("no"):
-            st.write("be serious for one second 😭")
-        elif choice.startswith("maybe"):
-            st.write("hmm… progress.")
-        else:
-            st.write("yeah exactly.")
-
-        st.write("you are still emotionally attached 🤨")
+        st.markdown('<p class="cute-text">analysis complete 🧠<br>you are still attached 🤨</p>', unsafe_allow_html=True)
 
         st.write(random.choice([
             "don’t be dramatic 🙄",
             "this is a safe space (for you to stop being mad)",
-            "you’re definitely smiling right now"
+            "you’re lowkey smiling right now"
         ]))
 
-        if st.button("okay continue 😒", key="continue_btn"):
+        if st.button("continue"):
             st.session_state.page = "step3"
             st.session_state.submitted = False
 
 # ---- STEP 3 ----
 elif st.session_state.page == "step3":
-    st.markdown("<h2>wait…</h2>", unsafe_allow_html=True)
+    st.markdown("<h2>...</h2>", unsafe_allow_html=True)
 
     st.image("https://media.giphy.com/media/9Y5BbDSkSTiY8/giphy.gif", width=200)
 
-    st.write("i don’t like it when we’re like this.")
+    st.markdown('<p class="cute-text">i don’t like it when we’re like this</p>', unsafe_allow_html=True)
 
-    st.write(random.choice([
-        "i miss you btw.",
-        "this is dumb, we should not be fighting.",
-        "you’re my favorite person, even when you’re annoying."
-    ]))
+    # typing effect (added, not replacing)
+    placeholder = st.empty()
+    for i in range(3):
+        placeholder.write("typing" + "." * (i+1))
+        time.sleep(0.4)
 
-    if st.button("fine 😶", key="step3_btn"):
+    if st.button("okay…"):
         st.session_state.page = "final"
-
-    if st.button("still mad 😤", key="step3_mad"):
-        st.write("ok but like… unnecessary 🙄")
 
 # ---- FINAL ----
 elif st.session_state.page == "final":
     st.markdown("<h2>final decision 🎲</h2>", unsafe_allow_html=True)
 
+    st.image("https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif", width=200)
     st.image("https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif", width=220)
 
-    st.write("i don’t care about being right… i just don’t like us like this.")
+    st.markdown('<p class="cute-text">choose wisely.</p>', unsafe_allow_html=True)
 
     st.video("https://www.youtube.com/watch?v=uxpDa-c-4Mc")
 
-    col1, col2 = st.columns(2)
+    if st.button("click to decide our fate"):
+        st.success(random.choice([
+            "correct answer. you may proceed 😌",
+            "hug required. no exceptions 🤗",
+            "you text me right now 😏"
+        ]))
 
-    with col1:
-        if st.button("call her 📞", key="call_btn"):
-            st.session_state.page = "call"
+    if st.button("📞 call me"):
+        st.session_state.page = "call"
 
-    with col2:
-        if st.button("be stubborn 😤", key="stubborn_btn"):
-            st.write("invalid option. try again.")
-
-    st.markdown("[📞 call me now](tel:+1234567890)")
-
-# ---- INCOMING CALL SCREEN ----
+# ---- CALL SCREEN ----
 elif st.session_state.page == "call":
     st.markdown("<h1>📞 incoming call…</h1>", unsafe_allow_html=True)
 
-    st.image("https://media.giphy.com/media/3o6ZtaO9BZHcOjmErm/giphy.gif", width=200)
+    st.audio("https://www.soundjay.com/phone/telephone-ring-01.mp3", autoplay=True)
 
-    st.write("you have no choice now 😌")
+    st.write("answer it 😐")
 
-    time.sleep(1)
-    st.write("connecting…")
+    time.sleep(3)
 
-    time.sleep(1)
+    st.session_state.page = "missed"
 
-    # 💖 hearts explosion instead of balloons
-    st.markdown("""
-    <div style="font-size:40px;">
-    💖 💕 💗 💓 💞 💘 💝 💖 💕 💗
-    </div>
-    """, unsafe_allow_html=True)
+# ---- MISSED CALL ----
+elif st.session_state.page == "missed":
+    st.markdown("<h1>📵 missed call</h1>", unsafe_allow_html=True)
 
-    st.success("good decision. call me.")
+    st.write("wow. okay 😭")
+
+    if st.button("call back"):
+        st.markdown("📞 call me now: +91 9819271926")
