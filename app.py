@@ -1,58 +1,65 @@
 import streamlit as st
 import random
 
-# ---- PAGE CONFIG ----
-st.set_page_config(page_title="for u 🙈", layout="centered")
+st.set_page_config(page_title="for u 😶", layout="centered")
 
-# ---- CUTE CSS ----
+# ---- FIXED + IMPROVED CSS ----
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
 
-html, body, [class*="css"]  {
+/* FORCE LIGHT MODE BACKGROUND */
+html, body, .stApp {
+    background-color: #fff5f7 !important;
+    color: #333 !important;
     font-family: 'Quicksand', sans-serif;
-    background-color: #fff5f7;
 }
 
-/* Center content */
+/* CENTER EVERYTHING */
 .block-container {
+    max-width: 500px;
+    margin: auto;
     text-align: center;
-    padding-top: 3rem;
+    padding-top: 2rem;
 }
 
-/* Titles */
+/* HEADINGS */
 h1 {
     color: #ff4d6d;
-    font-size: 42px;
+    font-size: 36px;
 }
 h2 {
     color: #ff758f;
 }
 
-/* Buttons */
+/* BUTTONS (FIX SIZE ISSUE) */
 .stButton>button {
     background-color: #ffd6e0;
     color: #333;
     border-radius: 25px;
-    height: 3.2em;
-    width: 80%;
-    margin: auto;
-    display: block;
+    padding: 14px 20px;
+    width: 100%;
     font-size: 16px;
     border: none;
-    transition: 0.2s;
+    white-space: normal;
+    height: auto;
+    margin-top: 10px;
 }
 
 .stButton>button:hover {
     background-color: #ffb3c6;
-    transform: scale(1.05);
+    transform: scale(1.03);
 }
 
-/* Text */
+/* TEXT */
 .cute-text {
-    font-size: 18px;
-    color: #555;
-    margin-bottom: 20px;
+    font-size: 17px;
+    margin-bottom: 15px;
+}
+
+/* RADIO ALIGN */
+div[role="radiogroup"] {
+    text-align: left;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -67,30 +74,37 @@ if "submitted" not in st.session_state:
 # ---- HOME ----
 if st.session_state.page == "home":
     st.markdown("<h1>hey you 😤</h1>", unsafe_allow_html=True)
-    
-    st.image("https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif", width=200)
-    
-    st.markdown('<p class="cute-text">i know you’re mad… but just click this 🙄</p>', unsafe_allow_html=True)
+
+    st.image("https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif", width=180)
+    st.image("https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif", width=180)
+
+    st.markdown('<p class="cute-text">i know you’re mad… but this is important 😔</p>', unsafe_allow_html=True)
 
     if st.button("okay fine 🙄"):
         st.session_state.page = "step1"
 
+    if st.button("no 😤"):
+        st.write("wrong answer. try again.")
+
 # ---- STEP 1 ----
 elif st.session_state.page == "step1":
     st.markdown("<h2>step 1 🌸</h2>", unsafe_allow_html=True)
-    
-    st.markdown('<p class="cute-text">take a deep breath 😌<br>yes, i’m serious.</p>', unsafe_allow_html=True)
 
-    st.markdown("💖 💖 💖")
+    st.image("https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif", width=200)
+
+    st.markdown('<p class="cute-text">take a deep breath 😌<br>don’t skip this.</p>', unsafe_allow_html=True)
 
     if st.button("done 😶"):
         st.session_state.page = "step2"
+
+    if st.button("i refuse 😤"):
+        st.write("you’re being dramatic again.")
 
 # ---- STEP 2 ----
 elif st.session_state.page == "step2":
     st.markdown("<h2>important question 🧠</h2>", unsafe_allow_html=True)
 
-    st.markdown("💭")
+    st.image("https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif", width=200)
 
     st.radio("do you miss me?", ["no 😤", "maybe 😶", "okay fine 😒"])
 
@@ -103,10 +117,10 @@ elif st.session_state.page == "step2":
         st.write(random.choice([
             "don’t be dramatic 🙄",
             "this is a safe space (for you to stop being mad)",
-            "you’re lowkey smiling right now"
+            "you’re definitely smiling right now"
         ]))
 
-        if st.button("continue"):
+        if st.button("okay continue 😒"):
             st.session_state.page = "step3"
             st.session_state.submitted = False
 
@@ -114,16 +128,21 @@ elif st.session_state.page == "step2":
 elif st.session_state.page == "step3":
     st.markdown("<h2>...</h2>", unsafe_allow_html=True)
 
+    st.image("https://media.giphy.com/media/9Y5BbDSkSTiY8/giphy.gif", width=200)
+
     st.markdown('<p class="cute-text">i don’t like it when we’re like this.</p>', unsafe_allow_html=True)
 
-    st.markdown("💖 💖 💖")
-
-    if st.button("okay…"):
+    if st.button("fine 😶"):
         st.session_state.page = "final"
+
+    if st.button("still mad 😤"):
+        st.write("ok but like… unnecessary.")
 
 # ---- FINAL ----
 elif st.session_state.page == "final":
     st.markdown("<h2>final decision 🎲</h2>", unsafe_allow_html=True)
+
+    st.image("https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif", width=200)
 
     st.markdown('<p class="cute-text">choose wisely.</p>', unsafe_allow_html=True)
 
