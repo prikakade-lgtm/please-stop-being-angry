@@ -136,6 +136,7 @@ elif st.session_state.page == "step3":
     if st.button("still mad 😤", key="step3_mad"):
         st.write("ok but like… unnecessary 🙄")
 
+
 # ---- FINAL ----
 elif st.session_state.page == "final":
     st.markdown("<h2>final decision 🎲</h2>", unsafe_allow_html=True)
@@ -146,19 +147,55 @@ elif st.session_state.page == "final":
 
     st.video("https://www.youtube.com/watch?v=uxpDa-c-4Mc")
 
+    if st.button("fine… what do i have to do 😒", key="start_game"):
+        st.session_state.page = "game"
+
+# ---- GAME ----
+elif st.session_state.page == "game":
+    st.markdown("<h2>mini game 🎮</h2>", unsafe_allow_html=True)
+
+    st.write("win this and you get to call me.")
+
+    st.image("https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif", width=180)
+
+    st.write("question 1:")
+
     col1, col2 = st.columns(2)
 
     with col1:
-        if st.button("call her 📞", key="call_btn"):
-            st.session_state.page = "call"
+        if st.button("stay mad 😤", key="wrong1"):
+            st.write("embarrassing choice.")
 
     with col2:
-        if st.button("be stubborn 😤", key="stubborn_btn"):
-            st.write("invalid option. try again.")
+        if st.button("call her 📞", key="correct1"):
+            st.session_state.page = "game2"
 
-    st.markdown("📞 call me now: +91 9819271926")
+    st.write("---")
 
-# ---- INCOMING CALL SCREEN ----
+    st.write("question 2:")
+
+    col3, col4 = st.columns(2)
+
+    with col3:
+        if st.button("ignore her 🙄", key="wrong2"):
+            st.write("you’re really committed to being annoying huh")
+
+    with col4:
+        if st.button("fix it 😌", key="correct2"):
+            st.session_state.page = "win"
+
+# ---- WIN ----
+elif st.session_state.page == "win":
+    st.markdown("<h2>you win 🏆</h2>", unsafe_allow_html=True)
+
+    st.image("https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif", width=200)
+
+    st.write("okay… you’ve proven yourself.")
+
+    if st.button("unlock call 📞", key="unlock"):
+        st.session_state.page = "call"
+
+# ---- CALL ----
 elif st.session_state.page == "call":
     st.markdown("<h1>📞 incoming call…</h1>", unsafe_allow_html=True)
 
@@ -166,12 +203,6 @@ elif st.session_state.page == "call":
 
     st.write("you have no choice now 😌")
 
-    time.sleep(1)
-    st.write("connecting…")
-
-    time.sleep(1)
-
-    # 💖 hearts explosion instead of balloons
     st.markdown("""
     <div style="font-size:40px;">
     💖 💕 💗 💓 💞 💘 💝 💖 💕 💗
@@ -179,3 +210,5 @@ elif st.session_state.page == "call":
     """, unsafe_allow_html=True)
 
     st.success("good decision. call me.")
+
+    st.markdown("📞 call her now: +91 9819271926")
