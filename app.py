@@ -1,45 +1,34 @@
 import streamlit as st
 import random
 
-# ---- PAGE CONFIG ----
 st.set_page_config(page_title="for u 😶", layout="centered")
 
 # ---- CUTE CSS ----
 st.markdown("""
-    <style>
-    body {
-        background-color: #fff0f5;
-    }
-    .main {
-        background-color: #fff0f5;
-    }
-    h1, h2, h3 {
-        text-align: center;
-        color: #ff4d6d;
-    }
-    .stButton>button {
-        background-color: #ffd6e0;
-        color: #333;
-        border-radius: 20px;
-        height: 3em;
-        width: 100%;
-        font-size: 16px;
-        border: none;
-    }
-    .stButton>button:hover {
-        background-color: #ffb3c6;
-    }
-    .center-text {
-        text-align: center;
-        font-size: 18px;
-        color: #555;
-    }
-    </style>
+<style>
+body { background-color: #fff0f5; }
+.main { background-color: #fff0f5; }
+h1, h2, h3 { text-align: center; color: #ff4d6d; }
+.stButton>button {
+    background-color: #ffd6e0;
+    color: #333;
+    border-radius: 20px;
+    height: 3em;
+    width: 100%;
+    font-size: 16px;
+    border: none;
+}
+.stButton>button:hover { background-color: #ffb3c6; }
+.center-text { text-align: center; font-size: 18px; color: #555; }
+</style>
 """, unsafe_allow_html=True)
 
 # ---- STATE ----
 if "page" not in st.session_state:
     st.session_state.page = "home"
+
+if "submitted" not in st.session_state:
+    st.session_state.submitted = False
 
 # ---- HOME ----
 if st.session_state.page == "home":
@@ -66,11 +55,15 @@ elif st.session_state.page == "step2":
     answer = st.radio("do you miss me?", ["no 😤", "maybe 😶", "okay fine 😒"])
 
     if st.button("submit"):
+        st.session_state.submitted = True
+
+    if st.session_state.submitted:
         st.markdown('<p class="center-text">analyzing...</p>', unsafe_allow_html=True)
         st.markdown('<p class="center-text">result: you are still attached 🤨</p>', unsafe_allow_html=True)
 
         if st.button("continue"):
             st.session_state.page = "step3"
+            st.session_state.submitted = False
             st.rerun()
 
 # ---- STEP 3 ----
@@ -94,6 +87,6 @@ elif st.session_state.page == "final":
         ]
         st.success(random.choice(outcomes))
 
-        if st.button("restart 🔄"):
-            st.session_state.page = "home"
-            st.rerun()
+    if st.button("restart 🔄"):
+        st.session_state.page = "home"
+        st.rerun()
