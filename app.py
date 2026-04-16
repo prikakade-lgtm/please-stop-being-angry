@@ -156,7 +156,7 @@ elif st.session_state.page == "final":
         if st.button("be stubborn 😤", key="stubborn_btn"):
             st.write("invalid option. try again.")
 
-    st.markdown("[📞 call me now](tel:+91 9819271926)")
+    st.markdown("📞 call me now: +91 9819271926")
 
 # ---- INCOMING CALL SCREEN ----
 elif st.session_state.page == "call":
