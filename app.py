@@ -4,19 +4,17 @@ import time
 
 st.set_page_config(page_title="for u 😶", layout="centered")
 
-# ---- CSS (PASTEL FIXED) ----
+# ---- CSS ----
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
 
-/* BACKGROUND */
 html, body, .stApp {
-    background-color: #ffdce5 !important;
+    background: linear-gradient(180deg, #ffe4ec, #ffd6e0) !important;
     font-family: 'Quicksand', sans-serif;
-    color: #000 !important;
+    color: #333 !important;
 }
 
-/* CENTER */
 .block-container {
     max-width: 420px;
     margin: auto;
@@ -24,36 +22,21 @@ html, body, .stApp {
     padding-top: 2rem;
 }
 
-/* TEXT */
-h1, h2, p, div, span, label {
-    color: #000 !important;
-}
+h1 { color: #ff4d6d; }
+h2 { color: #ff758f; }
 
-/* BUTTONS */
 .stButton>button {
-    background-color: #ff4d6d;
-    color: white !important;
+    background-color: #ffd6e0;
+    color: #333 !important;
     border-radius: 25px;
     padding: 14px;
     width: 100%;
     border: none;
     margin-top: 10px;
-    font-weight: 600;
 }
 
 .stButton>button:hover {
-    background-color: #e6395c;
-}
-
-/* MOVING BUTTON */
-.move-btn {
-    position: relative;
-    animation: move 1.5s infinite alternate;
-}
-
-@keyframes move {
-    0% { left: -10px; }
-    100% { left: 10px; }
+    background-color: #ffb3c6;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -73,13 +56,11 @@ if st.session_state.page == "home":
 
     st.write("okay listen… just click this.")
 
-    if st.button("okay fine 🙄"):
+    if st.button("okay fine 🙄", key="home_btn"):
         st.session_state.page = "step1"
 
-    st.markdown('<div class="move-btn">', unsafe_allow_html=True)
-    if st.button("no 😤"):
-        st.write("wrong answer 🙄")
-    st.markdown('</div>', unsafe_allow_html=True)
+    if st.button("no 😤", key="home_no"):
+        st.write("wrong answer. try again 🙄")
 
 # ---- STEP 1 ----
 elif st.session_state.page == "step1":
@@ -89,8 +70,11 @@ elif st.session_state.page == "step1":
 
     st.write("take a deep breath 😌")
 
-    if st.button("done 😶"):
+    if st.button("done 😶", key="step1_btn"):
         st.session_state.page = "step2"
+
+    if st.button("i refuse 😤", key="step1_refuse"):
+        st.write("you’re being dramatic again.")
 
 # ---- STEP 2 ----
 elif st.session_state.page == "step2":
@@ -104,10 +88,11 @@ elif st.session_state.page == "step2":
             "no 😤 (lying)",
             "maybe 😶 (hmm)",
             "okay fine 😒 (correct)"
-        ]
+        ],
+        key="radio_q"
     )
 
-    if st.button("submit"):
+    if st.button("submit", key="submit_btn"):
         st.session_state.submitted = True
 
     if st.session_state.submitted:
@@ -121,7 +106,13 @@ elif st.session_state.page == "step2":
 
         st.write("you are still emotionally attached 🤨")
 
-        if st.button("continue"):
+        st.write(random.choice([
+            "don’t be dramatic 🙄",
+            "this is a safe space (for you to stop being mad)",
+            "you’re definitely smiling right now"
+        ]))
+
+        if st.button("okay continue 😒", key="continue_btn"):
             st.session_state.page = "step3"
             st.session_state.submitted = False
 
@@ -133,20 +124,17 @@ elif st.session_state.page == "step3":
 
     st.write("i don’t like it when we’re like this.")
 
-    # typing animation
-    placeholder = st.empty()
-    for i in range(3):
-        placeholder.write("typing" + "." * (i+1))
-        time.sleep(0.5)
-
     st.write(random.choice([
         "i miss you btw.",
         "this is dumb, we should not be fighting.",
         "you’re my favorite person, even when you’re annoying."
     ]))
 
-    if st.button("fine 😶"):
+    if st.button("fine 😶", key="step3_btn"):
         st.session_state.page = "final"
+
+    if st.button("still mad 😤", key="step3_mad"):
+        st.write("ok but like… unnecessary 🙄")
 
 # ---- FINAL ----
 elif st.session_state.page == "final":
@@ -161,38 +149,33 @@ elif st.session_state.page == "final":
     col1, col2 = st.columns(2)
 
     with col1:
-        if st.button("call her 📞"):
+        if st.button("call her 📞", key="call_btn"):
             st.session_state.page = "call"
 
     with col2:
-        st.markdown('<div class="move-btn">', unsafe_allow_html=True)
-        if st.button("be stubborn 😤"):
-            st.write("invalid option.")
-        st.markdown('</div>', unsafe_allow_html=True)
+        if st.button("be stubborn 😤", key="stubborn_btn"):
+            st.write("invalid option. try again.")
 
-# ---- INCOMING CALL ----
+    st.markdown("[📞 call me now](tel:+1234567890)")
+
+# ---- INCOMING CALL SCREEN ----
 elif st.session_state.page == "call":
     st.markdown("<h1>📞 incoming call…</h1>", unsafe_allow_html=True)
 
-    # ringtone
-    st.audio("https://www.soundjay.com/phone/telephone-ring-01.mp3", autoplay=True)
-
     st.image("https://media.giphy.com/media/3o6ZtaO9BZHcOjmErm/giphy.gif", width=200)
 
-    st.write("answer it 😐")
+    st.write("you have no choice now 😌")
 
-    time.sleep(3)
+    time.sleep(1)
+    st.write("connecting…")
 
-    st.session_state.page = "missed"
+    time.sleep(1)
 
-# ---- MISSED CALL ----
-elif st.session_state.page == "missed":
-    st.markdown("<h1>📵 missed call</h1>", unsafe_allow_html=True)
+    # 💖 hearts explosion instead of balloons
+    st.markdown("""
+    <div style="font-size:40px;">
+    💖 💕 💗 💓 💞 💘 💝 💖 💕 💗
+    </div>
+    """, unsafe_allow_html=True)
 
-    st.write("wow… you really ignored that 😭")
-
-    if st.button("okay okay i’ll call back 😭"):
-        st.markdown("[📞 call me now](tel:+1234567890)")
-
-    if st.button("restart 🔄"):
-        st.session_state.page = "home"
+    st.success("good decision. call me.")
