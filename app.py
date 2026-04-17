@@ -142,6 +142,7 @@ elif st.session_state.page == "step2":
                 "look who’s being real for once.",
                 "see? that wasn’t so hard 😏"
             ]
+            clear_message()
             st.session_state.page = "step3"
             st.rerun()
 
