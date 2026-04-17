@@ -10,7 +10,7 @@ st.markdown("""
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
 
 html, body, .stApp {
-    background-color: #ffdce5 !important;  /* pastel pink */
+    background-color: #ffdce5 !important;
     font-family: 'Quicksand', sans-serif;
     color: black !important;
 }
@@ -30,13 +30,18 @@ p, div, span, label {
 
 /* BUTTONS */
 .stButton>button {
-    background-color: #ff4d6d;  /* darker pink */
+    background-color: #ff4d6d;
     color: white !important;
     border-radius: 25px;
     padding: 14px;
     width: 100%;
     border: none;
     margin-top: 10px;
+    transition: all 0.2s ease;
+}
+
+.stButton>button:active {
+    transform: scale(0.95);
 }
 
 .stButton>button:hover {
@@ -76,6 +81,7 @@ elif st.session_state.page == "step1":
 
     if st.button("done 😶", key="step1_btn"):
         st.session_state.page = "step2"
+        st.markdown("💖💖💖💖💖")
 
     if st.button("i refuse 😤", key="step1_refuse"):
         st.write("you’re being dramatic again.")
@@ -110,10 +116,13 @@ elif st.session_state.page == "step2":
 
         st.write("you are still emotionally attached 🤨")
 
+        # SAVAGE UPGRADE
         st.write(random.choice([
             "don’t be dramatic 🙄",
-            "this is a safe space (for you to stop being mad)",
-            "you’re definitely smiling right now"
+            "you’re doing too much right now",
+            "this could’ve been over 10 minutes ago btw",
+            "you miss me. let’s not lie today.",
+            "this attitude is not giving what you think it is"
         ]))
 
         if st.button("okay continue 😒", key="continue_btn"):
@@ -126,6 +135,12 @@ elif st.session_state.page == "step3":
 
     st.image("https://media.giphy.com/media/9Y5BbDSkSTiY8/giphy.gif", width=200)
 
+    # DRAMATIC PAUSE
+    placeholder = st.empty()
+    for t in ["...", "wait...", "okay listen..."]:
+        placeholder.write(t)
+        time.sleep(0.5)
+
     st.write("i don’t like it when we’re like this.")
 
     st.write(random.choice([
@@ -136,6 +151,7 @@ elif st.session_state.page == "step3":
 
     if st.button("fine 😶", key="step3_btn"):
         st.session_state.page = "final"
+        st.markdown("💖💖💖💖💖")
 
     if st.button("still mad 😤", key="step3_mad"):
         st.write("ok but like… unnecessary 🙄")
@@ -157,10 +173,24 @@ elif st.session_state.page == "final":
             st.session_state.page = "call"
 
     with col2:
+        offset = random.randint(-30, 30)
+        st.markdown(f"<div style='position:relative; left:{offset}px'>", unsafe_allow_html=True)
         if st.button("be stubborn 😤", key="stubborn_btn"):
             st.write("invalid option. try again.")
+        st.markdown("</div>", unsafe_allow_html=True)
 
-    st.markdown("📞 call me now: +91 9819271926")
+    # OPTION D GAME
+    if st.button("try your luck again 🎲"):
+        st.write(random.choice([
+            "call her.",
+            "call her now.",
+            "still call her.",
+            "why are you still here? call her.",
+            "this app is literally telling you what to do 😭"
+        ]))
+
+    # CLICKABLE CALL
+    st.markdown("[📞 call me now](tel:+919819271926)")
 
 # ---- INCOMING CALL SCREEN ----
 elif st.session_state.page == "call":
