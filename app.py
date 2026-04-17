@@ -6,7 +6,7 @@ st.set_page_config(page_title="for my naaraa boyfriend 🦝", layout="centered")
 
 # ---- RANDOM EMOJI BACKGROUND ----
 def render_cute_background():
-    emojis = ["💖","💕","💗","💓","💞","💘","💝","🌸","🌺","🌼","🌷","🌻","🌹"]
+    emojis = ["💚","🤩","😍","😻","💋","🫦","💅","👩‍❤️‍💋‍👨","👗","🐶","🐼","🐷","🐥","🐙","🦄","🍄","💐","🌷","🌹","🪻","🪷","🌺","🌸","🌼","🌻","💥","☁️","🍇","🍓","🍒","🍡","🎂","🍭","🍬","🎆","💎","🎈","🎀","🪅","🎊","🎉","🩷","❤️","🧡","💛","💚","🩵","💙","💜","🖤","🩶","🤍","🤎","❤️‍🔥","❣️","💕","💞","💓","💗","💖","💘","💝"]
 
     elements = ""
     for _ in range(45):
@@ -23,7 +23,7 @@ def render_cute_background():
             top: {top}%;
             font-size: {size}px;
             transform: rotate({rotate}deg);
-            opacity: 0.22;
+            opacity: 0.75;
             pointer-events: none;
             z-index: 0;
         ">
