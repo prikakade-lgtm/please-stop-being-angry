@@ -22,13 +22,8 @@ html, body, .stApp {
     padding-top: 2rem;
 }
 
-h1 { color: black; }
-h2 { color: black; }
-p, div, span, label {
-    color: black !important;
-}
+h1, h2 { color: black; }
 
-/* BUTTONS */
 .stButton>button {
     background-color: #ff4d6d;
     color: white !important;
@@ -37,11 +32,11 @@ p, div, span, label {
     width: 100%;
     border: none;
     margin-top: 10px;
-    transition: all 0.2s ease;
+    transition: 0.2s;
 }
 
 .stButton>button:active {
-    transform: scale(0.95);
+    transform: scale(0.96);
 }
 
 .stButton>button:hover {
@@ -65,10 +60,11 @@ if st.session_state.page == "home":
 
     st.write("okay listen… just click this.")
 
-    if st.button("okay fine 🙄", key="home_btn"):
+    if st.button("okay fine 🙄"):
         st.session_state.page = "step1"
+        st.rerun()
 
-    if st.button("no 😤", key="home_no"):
+    if st.button("no 😤"):
         st.write("wrong answer. try again 🙄")
 
 # ---- STEP 1 ----
@@ -79,11 +75,11 @@ elif st.session_state.page == "step1":
 
     st.write("take a deep breath 😌")
 
-    if st.button("done 😶", key="step1_btn"):
+    if st.button("done 😶"):
         st.session_state.page = "step2"
-        st.markdown("💖💖💖💖💖")
+        st.rerun()
 
-    if st.button("i refuse 😤", key="step1_refuse"):
+    if st.button("i refuse 😤"):
         st.write("you’re being dramatic again.")
 
 # ---- STEP 2 ----
@@ -98,11 +94,10 @@ elif st.session_state.page == "step2":
             "no 😤 (lying)",
             "maybe 😶 (hmm)",
             "okay fine 😒 (correct)"
-        ],
-        key="radio_q"
+        ]
     )
 
-    if st.button("submit", key="submit_btn"):
+    if st.button("submit"):
         st.session_state.submitted = True
 
     if st.session_state.submitted:
@@ -116,18 +111,17 @@ elif st.session_state.page == "step2":
 
         st.write("you are still emotionally attached 🤨")
 
-        # SAVAGE UPGRADE
         st.write(random.choice([
-            "don’t be dramatic 🙄",
-            "you’re doing too much right now",
-            "this could’ve been over 10 minutes ago btw",
             "you miss me. let’s not lie today.",
-            "this attitude is not giving what you think it is"
+            "this could’ve been over already btw",
+            "you’re doing too much 😭",
+            "this attitude is not helping you win",
         ]))
 
-        if st.button("okay continue 😒", key="continue_btn"):
+        if st.button("okay continue 😒"):
             st.session_state.page = "step3"
             st.session_state.submitted = False
+            st.rerun()
 
 # ---- STEP 3 ----
 elif st.session_state.page == "step3":
@@ -135,10 +129,11 @@ elif st.session_state.page == "step3":
 
     st.image("https://media.giphy.com/media/9Y5BbDSkSTiY8/giphy.gif", width=200)
 
-    # DRAMATIC PAUSE
-    placeholder = st.empty()
-    for t in ["...", "wait...", "okay listen..."]:
-        placeholder.write(t)
+    # CLEAN DRAMATIC PAUSE
+    with st.empty():
+        st.write("...")
+        time.sleep(0.5)
+        st.write("wait...")
         time.sleep(0.5)
 
     st.write("i don’t like it when we’re like this.")
@@ -149,11 +144,11 @@ elif st.session_state.page == "step3":
         "you’re my favorite person, even when you’re annoying."
     ]))
 
-    if st.button("fine 😶", key="step3_btn"):
+    if st.button("fine 😶"):
         st.session_state.page = "final"
-        st.markdown("💖💖💖💖💖")
+        st.rerun()
 
-    if st.button("still mad 😤", key="step3_mad"):
+    if st.button("still mad 😤"):
         st.write("ok but like… unnecessary 🙄")
 
 # ---- FINAL ----
@@ -166,33 +161,25 @@ elif st.session_state.page == "final":
 
     st.video("https://www.youtube.com/watch?v=uxpDa-c-4Mc")
 
-    col1, col2 = st.columns(2)
+    if st.button("call me 📞"):
+        st.session_state.page = "call"
+        st.rerun()
 
-    with col1:
-        if st.button("call me 📞", key="call_btn"):
-            st.session_state.page = "call"
+    if st.button("be stubborn 😤"):
+        st.write("invalid option. try again.")
 
-    with col2:
-        offset = random.randint(-30, 30)
-        st.markdown(f"<div style='position:relative; left:{offset}px'>", unsafe_allow_html=True)
-        if st.button("be stubborn 😤", key="stubborn_btn"):
-            st.write("invalid option. try again.")
-        st.markdown("</div>", unsafe_allow_html=True)
-
-    # OPTION D GAME
+    # SIMPLE OPTION D (WORKING)
     if st.button("try your luck again 🎲"):
         st.write(random.choice([
             "call her.",
             "call her now.",
             "still call her.",
-            "why are you still here? call her.",
-            "this app is literally telling you what to do 😭"
+            "you already know what to do.",
         ]))
 
-    # CLICKABLE CALL
     st.markdown("[📞 call me now](tel:+919819271926)")
 
-# ---- INCOMING CALL SCREEN ----
+# ---- CALL ----
 elif st.session_state.page == "call":
     st.markdown("<h1>📞 incoming call…</h1>", unsafe_allow_html=True)
 
@@ -205,10 +192,6 @@ elif st.session_state.page == "call":
 
     time.sleep(1)
 
-    st.markdown("""
-    <div style="font-size:40px;">
-    💖 💕 💗 💓 💞 💘 💝 💖 💕 💗
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown("💖 💕 💗 💓 💞 💘 💝 💖")
 
     st.success("good decision. call me.")
