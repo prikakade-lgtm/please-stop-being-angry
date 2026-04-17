@@ -116,30 +116,39 @@ elif st.session_state.page == "step2":
         key="radio_q"
     )
 
+    # initialize message list
+    if "msg_list" not in st.session_state:
+        st.session_state.msg_list = []
+
     if st.button("submit"):
+
         if choice.startswith("no"):
-            show_message("no?? 😭 be serious. we both know that’s not true.\nthis attitude is not convincing anyone btw 🙄")
+            st.session_state.msg_list = [
+                "no?? 😭 be serious.",
+                "we both know that’s not true.",
+                "this attitude is not convincing anyone btw 🙄"
+            ]
 
         elif choice.startswith("maybe"):
-            show_message("maybe?? 🤨 okay… we’re getting somewhere.\nthat was dangerously close to honesty 😌")
+            st.session_state.msg_list = [
+                "maybe?? 🤨 okay…",
+                "we’re getting somewhere.",
+                "that was dangerously close to honesty 😌"
+            ]
 
         else:
-            clear_message()
-            show_message("okay fine 😒?? wow look who’s being real for once.\nsee? that wasn’t so hard 😏")
+            st.session_state.msg_list = [
+                "okay fine 😒?? wow.",
+                "look who’s being real for once.",
+                "see? that wasn’t so hard 😏"
+            ]
             st.session_state.page = "step3"
             st.rerun()
 
-#    if st.session_state.message:
-#        st.write(st.session_state.message)
-
-#        st.write(random.choice([
-#            "don’t be dramatic 🙄",
-#            "this could’ve been over 10 minutes ago btw",
-#            "you miss me. let’s not lie today.",
-#            "this is lowkey embarrassing for you 😭",
-#            "you’re definitely smiling right now"
-#       ]))
-
+    # DISPLAY ALL MESSAGES TOGETHER
+    if st.session_state.msg_list:
+        for msg in st.session_state.msg_list:
+            st.write(msg)
 # ---- STEP 3 ----
 elif st.session_state.page == "step3":
     st.markdown("<h2>wait…</h2>", unsafe_allow_html=True)
