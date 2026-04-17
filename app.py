@@ -331,19 +331,19 @@ elif st.session_state.page == "final":
         st.rerun()
 
     # ---- DISPLAY MESSAGE ----
-   if st.session_state.message:
-    st.write(st.session_state.message)
+    if st.session_state.message:
+        st.write(st.session_state.message)
 
-    # 💔 soft mode trigger after a few wrong clicks
-    if "soft_shown" not in st.session_state:
-        st.session_state.soft_shown = False
+        # 💔 soft mode trigger after a few wrong clicks
+        if "soft_shown" not in st.session_state:
+            st.session_state.soft_shown = False
 
-    if len(st.session_state.used_responses) > 5 and not st.session_state.soft_shown:
-        st.markdown("...")
-        time.sleep(1)
-        st.markdown("ok wait")
-        time.sleep(1)
-        st.markdown("jokes aside…")
-        time.sleep(1)
-        st.markdown("i just miss you.")
-        st.session_state.soft_shown = True
+        if len(st.session_state.used_responses) > 5 and not st.session_state.soft_shown:
+            st.markdown("...")
+            time.sleep(1)
+            st.markdown("ok wait")
+            time.sleep(1)
+            st.markdown("jokes aside…")
+            time.sleep(1)
+            st.markdown("i just miss you.")
+            st.session_state.soft_shown = True
