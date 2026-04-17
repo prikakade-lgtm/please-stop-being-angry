@@ -2,7 +2,7 @@ import streamlit as st
 import random
 import time
 
-st.set_page_config(page_title="for my naaraa boyfriend 🦝", layout="centered")
+st.set_page_config(page_title="for my naaraaz 🦝", layout="centered")
 
 # ---- RANDOM EMOJI BACKGROUND ----
 def render_cute_background():
