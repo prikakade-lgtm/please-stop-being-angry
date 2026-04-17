@@ -2,7 +2,36 @@ import streamlit as st
 import random
 import time
 
-st.set_page_config(page_title="for u 😶", layout="centered")
+st.set_page_config(page_title="for my naaraa boyfriend 🦝", layout="centered")
+
+# ---- RANDOM EMOJI BACKGROUND ----
+def render_cute_background():
+    emojis = ["💖","💕","💗","💓","💞","💘","💝","🌸","🌺","🌼","🌷","🌻","🌹"]
+
+    elements = ""
+    for _ in range(45):
+        emoji = random.choice(emojis)
+        left = random.randint(0, 100)
+        top = random.randint(0, 100)
+        size = random.randint(18, 50)
+        rotate = random.randint(-30, 30)
+
+        elements += f"""
+        <div style="
+            position: fixed;
+            left: {left}%;
+            top: {top}%;
+            font-size: {size}px;
+            transform: rotate({rotate}deg);
+            opacity: 0.22;
+            pointer-events: none;
+            z-index: 0;
+        ">
+            {emoji}
+        </div>
+        """
+
+    st.markdown(elements, unsafe_allow_html=True)
 
 # ---- CSS ----
 st.markdown("""
@@ -20,6 +49,8 @@ html, body, .stApp {
     margin: auto;
     text-align: center;
     padding-top: 2rem;
+    position: relative;
+    z-index: 1;
 }
 
 h1, h2 { color: black; }
@@ -51,6 +82,9 @@ div[role="radiogroup"] * {
 </style>
 """, unsafe_allow_html=True)
 
+# 👉 RENDER BACKGROUND
+render_cute_background()
+
 # ---- STATE ----
 if "page" not in st.session_state:
     st.session_state.page = "home"
@@ -60,6 +94,9 @@ if "message" not in st.session_state:
 
 if "wrong_clicks" not in st.session_state:
     st.session_state.wrong_clicks = 0
+
+if "last_page" not in st.session_state:
+    st.session_state.last_page = ""
 
 def show_message(text):
     st.session_state.message = text
@@ -180,11 +217,6 @@ elif st.session_state.page == "step3":
 # ---- FINAL ----
 elif st.session_state.page == "final":
 
-    # initialize last_page tracker
-    if "last_page" not in st.session_state:
-        st.session_state.last_page = ""
-
-    # reset ONLY when entering final page (not every click)
     if st.session_state.last_page != "final":
         st.session_state.wrong_clicks = 0
 
@@ -197,14 +229,12 @@ elif st.session_state.page == "final":
 
     st.video("https://www.youtube.com/watch?v=uxpDa-c-4Mc")
 
-    # CORRECT BUTTON
     if st.button("call me. now. 📞"):
         st.markdown(
             '<meta http-equiv="refresh" content="0; url=tel:+919819271926">',
             unsafe_allow_html=True
         )
 
-    # ---- ESCALATING RESPONSES ----
     def get_response(level):
         if level <= 2:
             return random.choice([
@@ -215,7 +245,6 @@ elif st.session_state.page == "final":
             ])
         elif level <= 4:
             return random.choice([
-                "be serious for one second.",
                 "this is getting embarrassing 😭",
                 "you’re doing this on purpose now.",
                 "why are you like this."
@@ -224,25 +253,19 @@ elif st.session_state.page == "final":
             return random.choice([
                 "HELLO??",
                 "this is not a game anymore.",
-                "i am losing patience 😭",
                 "call. me."
             ])
         elif level <= 8:
             return random.choice([
-                "i know you see the right button.",
-                "your finger is avoiding it on purpose.",
                 "this is psychological warfare.",
                 "i’m judging you heavily right now."
             ])
         else:
             return random.choice([
-                "okay this is actually insane behavior.",
-                "just call me. please.",
-                "i am begging at this point 😭",
-                "this is your villain origin story."
+                "this is your villain origin story.",
+                "just call me. please 😭"
             ])
 
-    # WRONG BUTTONS
     if st.button("be stubborn 😤"):
         st.session_state.wrong_clicks += 1
         show_message(get_response(st.session_state.wrong_clicks))
@@ -253,6 +276,5 @@ elif st.session_state.page == "final":
         show_message(get_response(st.session_state.wrong_clicks))
         st.rerun()
 
-    # DISPLAY MESSAGE
     if st.session_state.message:
         st.write(st.session_state.message)
