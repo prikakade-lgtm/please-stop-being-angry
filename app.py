@@ -198,8 +198,14 @@ elif st.session_state.page == "final":
     )
     #st.markdown("[📞 call me now](tel:+919819271926)")
 
+    
     # WRONG OPTIONS (kept for fun)
+
+    if "msg_counter" not in st.session_state:
+        st.session_state.msg_counter = 0
+    
     if st.button("be stubborn 😤"):
+        st.session_state.msg_counter += 1
         show_message(random.choice([
             "no 😭",
             "wrong choice.",
@@ -207,8 +213,10 @@ elif st.session_state.page == "final":
             "you know that’s not the one.",
             "don’t do this."
         ]))
-
+        st.rerun()
+    
     if st.button("be a bitch 😡"):
+        st.session_state.msg_counter += 1
         show_message(random.choice([
             "call her.",
             "call her now.",
@@ -216,6 +224,7 @@ elif st.session_state.page == "final":
             "why are you still here? 😭",
             "just press the call button."
         ]))
-
+        st.rerun()
+    
     if st.session_state.message:
         st.write(st.session_state.message)
