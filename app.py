@@ -205,7 +205,7 @@ elif st.session_state.page == "step3":
 
     if st.button("fine 😶"):
         clear_message()
-        st.session_state.page = "final"
+        st.session_state.page = "memory"
         st.rerun()
 
     if st.button("still mad 😤"):
@@ -213,6 +213,63 @@ elif st.session_state.page == "step3":
 
     if st.session_state.message:
         st.write(st.session_state.message)
+
+# ---- MEMORY LANE ----
+elif st.session_state.page == "memory":
+
+    st.markdown("<h2>wait… one more thing 💭</h2>", unsafe_allow_html=True)
+
+    st.image("https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif", width=200)
+
+    memories = [
+        "remember when we stayed up for no reason 😭",
+        "you being annoying but i still liked you anyway",
+        "that one conversation we didn’t want to end",
+        "you’re still that person btw… just saying"
+    ]
+
+    st.write(random.choice(memories))
+
+    if st.button("okay… yeah 😶"):
+        clear_message()
+        st.session_state.page = "analysis"
+        st.rerun()
+
+    if st.button("still mad 😤"):
+        show_message("you’re trying really hard to stay mad rn 😭")
+
+    if st.session_state.message:
+        st.write(st.session_state.message)
+
+# ---- ANALYSIS ----
+elif st.session_state.page == "analysis":
+
+    st.markdown("<h2>analyzing behavior… 🧠</h2>", unsafe_allow_html=True)
+
+    placeholder = st.empty()
+
+    report = [
+        "scanning emotions…",
+        "detecting attitude…",
+        "measuring stubbornness levels…",
+        "finalizing report…"
+    ]
+
+    for step in report:
+        placeholder.write(step)
+        time.sleep(0.7)
+
+    placeholder.markdown("""
+    ✔ misses me  
+    ✔ slightly dramatic  
+    ✔ pretending to be mad  
+    ✔ will cave soon 😌  
+    """)
+
+    if st.button("continue 😒"):
+        clear_message()
+        st.session_state.page = "final"
+        st.rerun()
 
 # ---- FINAL ----
 elif st.session_state.page == "final":
@@ -274,5 +331,19 @@ elif st.session_state.page == "final":
         st.rerun()
 
     # ---- DISPLAY MESSAGE ----
-    if st.session_state.message:
-        st.write(st.session_state.message)
+   if st.session_state.message:
+    st.write(st.session_state.message)
+
+    # 💔 soft mode trigger after a few wrong clicks
+    if "soft_shown" not in st.session_state:
+        st.session_state.soft_shown = False
+
+    if len(st.session_state.used_responses) > 5 and not st.session_state.soft_shown:
+        st.markdown("...")
+        time.sleep(1)
+        st.markdown("ok wait")
+        time.sleep(1)
+        st.markdown("jokes aside…")
+        time.sleep(1)
+        st.markdown("i just miss you.")
+        st.session_state.soft_shown = True
