@@ -178,7 +178,14 @@ elif st.session_state.page == "final":
     st.video("https://www.youtube.com/watch?v=uxpDa-c-4Mc")
 
     # DIRECT CALL BUTTON
-    st.markdown("[📞 call me now](tel:+919819271926)")
+    if st.button("call me. now. 📞"):
+    st.markdown(
+        """
+        <meta http-equiv="refresh" content="0; url=tel:+919819271926">
+        """,
+        unsafe_allow_html=True
+    )
+    #st.markdown("[📞 call me now](tel:+919819271926)")
 
     # WRONG OPTIONS (kept for fun)
     if st.button("be stubborn 😤"):
