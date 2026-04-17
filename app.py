@@ -42,6 +42,12 @@ h1, h2 { color: black; }
 .stButton>button:hover {
     background-color: #e6395c;
 }
+
+/* RADIO TEXT BLACK */
+div[role="radiogroup"] label {
+    color: black !important;
+    font-weight: 600;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -52,7 +58,7 @@ if "page" not in st.session_state:
 if "message" not in st.session_state:
     st.session_state.message = ""
 
-# ---- HELPER ----
+# ---- HELPERS ----
 def show_message(text):
     st.session_state.message = text
 
@@ -107,28 +113,39 @@ elif st.session_state.page == "step2":
             "no 😤 (lying)",
             "maybe 😶 (hmm)",
             "okay fine 😒 (correct)"
-        ]
+        ],
+        key="radio_q"
     )
 
-    if st.button("submit"):
+    if st.button("submit", key="submit_btn"):
         if choice.startswith("no"):
-            show_message("be serious for one second 😭")
+            show_message("no?? 😭 be serious. we both know that’s not true.\nthis attitude is not convincing anyone btw 🙄")
+
         elif choice.startswith("maybe"):
-            show_message("hmm… progress.")
+            show_message("maybe?? 🤨 okay… we’re getting somewhere.\nthat was dangerously close to honesty 😌")
+
         else:
             clear_message()
+            show_message("okay fine 😒?? wow look who’s being real for once.\nsee? that wasn’t so hard 😏")
             st.session_state.page = "step3"
             st.rerun()
 
     if st.session_state.message:
         st.write(st.session_state.message)
 
+        st.write(random.choice([
+            "don’t be dramatic 🙄",
+            "this could’ve been over 10 minutes ago btw",
+            "you miss me. let’s not lie today.",
+            "this is lowkey embarrassing for you 😭",
+            "you’re definitely smiling right now"
+        ]))
+
 # ---- STEP 3 ----
 elif st.session_state.page == "step3":
     st.markdown("<h2>wait…</h2>", unsafe_allow_html=True)
     st.image("https://media.giphy.com/media/9Y5BbDSkSTiY8/giphy.gif", width=200)
 
-    # DRAMATIC TEXT (clean replacement)
     text_placeholder = st.empty()
     for t in ["...", "wait...", "okay listen..."]:
         text_placeholder.write(t)
@@ -158,35 +175,13 @@ elif st.session_state.page == "final":
     st.image("https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif", width=220)
 
     st.write("i don’t care about being right… i just don’t like us like this.")
+    st.write("stop being stubborn and just call me.")
 
     st.video("https://www.youtube.com/watch?v=uxpDa-c-4Mc")
 
-    if st.button("call me 📞"):
+    if st.button("call me. now. 📞"):
         st.session_state.page = "call"
         st.rerun()
-
-    if st.button("be stubborn 😤"):
-        show_message(random.choice([
-            "no 😭",
-            "wrong choice.",
-            "try again.",
-            "you know that’s not the one.",
-            "don’t do this."
-        ]))
-
-    if st.button("try your luck again 🎲"):
-        show_message(random.choice([
-            "call her.",
-            "call her now.",
-            "still call her.",
-            "why are you still here? 😭",
-            "just press the other button."
-        ]))
-
-    if st.session_state.message:
-        st.write(st.session_state.message)
-
-    st.markdown("[📞 call me now](tel:+919819271926)")
 
 # ---- CALL ----
 elif st.session_state.page == "call":
