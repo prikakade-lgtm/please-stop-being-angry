@@ -179,7 +179,16 @@ elif st.session_state.page == "step3":
 
 # ---- FINAL ----
 elif st.session_state.page == "final":
-    st.session_state.wrong_clicks = 0  # reset each time entering
+
+    # initialize last_page tracker
+    if "last_page" not in st.session_state:
+        st.session_state.last_page = ""
+
+    # reset ONLY when entering final page (not every click)
+    if st.session_state.last_page != "final":
+        st.session_state.wrong_clicks = 0
+
+    st.session_state.last_page = "final"
 
     st.markdown("<h2>final decision 🎲</h2>", unsafe_allow_html=True)
     st.image("https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif", width=220)
@@ -188,14 +197,14 @@ elif st.session_state.page == "final":
 
     st.video("https://www.youtube.com/watch?v=uxpDa-c-4Mc")
 
-    # CORRECT BUTTON (styled like others)
+    # CORRECT BUTTON
     if st.button("call me. now. 📞"):
         st.markdown(
             '<meta http-equiv="refresh" content="0; url=tel:+919819271926">',
             unsafe_allow_html=True
         )
 
-    # ---- ESCALATING WRONG RESPONSES ----
+    # ---- ESCALATING RESPONSES ----
     def get_response(level):
         if level <= 2:
             return random.choice([
@@ -244,5 +253,6 @@ elif st.session_state.page == "final":
         show_message(get_response(st.session_state.wrong_clicks))
         st.rerun()
 
+    # DISPLAY MESSAGE
     if st.session_state.message:
         st.write(st.session_state.message)
