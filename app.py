@@ -44,7 +44,7 @@ h1, h2 { color: black; }
     background-color: #e6395c;
 }
 
-/* FORCE RADIO TEXT BLACK */
+/* RADIO TEXT BLACK */
 div[role="radiogroup"] * {
     color: black !important;
 }
@@ -57,6 +57,9 @@ if "page" not in st.session_state:
 
 if "message" not in st.session_state:
     st.session_state.message = ""
+
+if "wrong_clicks" not in st.session_state:
+    st.session_state.wrong_clicks = 0
 
 def show_message(text):
     st.session_state.message = text
@@ -116,7 +119,6 @@ elif st.session_state.page == "step2":
         key="radio_q"
     )
 
-    # initialize message list
     if "msg_list" not in st.session_state:
         st.session_state.msg_list = []
 
@@ -137,19 +139,15 @@ elif st.session_state.page == "step2":
             ]
 
         else:
-            st.session_state.msg_list = [
-                "okay fine 😒?? wow.",
-                "look who’s being real for once.",
-                "see? that wasn’t so hard 😏"
-            ]
             clear_message()
+            st.session_state.msg_list = []
             st.session_state.page = "step3"
             st.rerun()
 
-    # DISPLAY ALL MESSAGES TOGETHER
     if st.session_state.msg_list:
         for msg in st.session_state.msg_list:
             st.write(msg)
+
 # ---- STEP 3 ----
 elif st.session_state.page == "step3":
     st.markdown("<h2>wait…</h2>", unsafe_allow_html=True)
@@ -181,6 +179,8 @@ elif st.session_state.page == "step3":
 
 # ---- FINAL ----
 elif st.session_state.page == "final":
+    st.session_state.wrong_clicks = 0  # reset each time entering
+
     st.markdown("<h2>final decision 🎲</h2>", unsafe_allow_html=True)
     st.image("https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif", width=220)
 
@@ -188,43 +188,61 @@ elif st.session_state.page == "final":
 
     st.video("https://www.youtube.com/watch?v=uxpDa-c-4Mc")
 
-    # DIRECT CALL BUTTON
+    # CORRECT BUTTON (styled like others)
     if st.button("call me. now. 📞"):
         st.markdown(
-        """
-        <meta http-equiv="refresh" content="0; url=tel:+919819271926">
-        """,
-        unsafe_allow_html=True
-    )
-    #st.markdown("[📞 call me now](tel:+919819271926)")
+            '<meta http-equiv="refresh" content="0; url=tel:+919819271926">',
+            unsafe_allow_html=True
+        )
 
-    
-    # WRONG OPTIONS (kept for fun)
+    # ---- ESCALATING WRONG RESPONSES ----
+    def get_response(level):
+        if level <= 2:
+            return random.choice([
+                "no 😭",
+                "wrong choice.",
+                "try again.",
+                "you know that’s not the one."
+            ])
+        elif level <= 4:
+            return random.choice([
+                "be serious for one second.",
+                "this is getting embarrassing 😭",
+                "you’re doing this on purpose now.",
+                "why are you like this."
+            ])
+        elif level <= 6:
+            return random.choice([
+                "HELLO??",
+                "this is not a game anymore.",
+                "i am losing patience 😭",
+                "call. me."
+            ])
+        elif level <= 8:
+            return random.choice([
+                "i know you see the right button.",
+                "your finger is avoiding it on purpose.",
+                "this is psychological warfare.",
+                "i’m judging you heavily right now."
+            ])
+        else:
+            return random.choice([
+                "okay this is actually insane behavior.",
+                "just call me. please.",
+                "i am begging at this point 😭",
+                "this is your villain origin story."
+            ])
 
-    if "msg_counter" not in st.session_state:
-        st.session_state.msg_counter = 0
-    
+    # WRONG BUTTONS
     if st.button("be stubborn 😤"):
-        st.session_state.msg_counter += 1
-        show_message(random.choice([
-            "no 😭",
-            "wrong choice.",
-            "try again.",
-            "you know that’s not the one.",
-            "don’t do this."
-        ]))
+        st.session_state.wrong_clicks += 1
+        show_message(get_response(st.session_state.wrong_clicks))
         st.rerun()
-    
+
     if st.button("be a bitch 😡"):
-        st.session_state.msg_counter += 1
-        show_message(random.choice([
-            "call her.",
-            "call her now.",
-            "still call her.",
-            "why are you still here? 😭",
-            "just press the call button."
-        ]))
+        st.session_state.wrong_clicks += 1
+        show_message(get_response(st.session_state.wrong_clicks))
         st.rerun()
-    
+
     if st.session_state.message:
         st.write(st.session_state.message)
