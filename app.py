@@ -190,7 +190,7 @@ elif st.session_state.page == "final":
             "don’t do this."
         ]))
 
-    if st.button("try your luck again 🎲"):
+    if st.button("be a bitch 😡"):
         show_message(random.choice([
             "call her.",
             "call her now.",
