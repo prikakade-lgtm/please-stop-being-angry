@@ -168,6 +168,7 @@ elif st.session_state.page == "step3":
     ]))
 
     if st.button("fine 😶"):
+        clear_message()
         st.session_state.page = "final"
         st.rerun()
 
