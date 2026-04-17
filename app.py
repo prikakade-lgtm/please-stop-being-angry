@@ -23,7 +23,7 @@ def render_cute_background():
             top: {top}%;
             font-size: {size}px;
             transform: rotate({rotate}deg);
-            opacity: 0.75;
+            opacity: 0.50;
             pointer-events: none;
             z-index: 0;
         ">
