@@ -129,16 +129,16 @@ elif st.session_state.page == "step2":
             st.session_state.page = "step3"
             st.rerun()
 
-    if st.session_state.message:
-        st.write(st.session_state.message)
+#    if st.session_state.message:
+#        st.write(st.session_state.message)
 
-        st.write(random.choice([
-            "don’t be dramatic 🙄",
-            "this could’ve been over 10 minutes ago btw",
-            "you miss me. let’s not lie today.",
-            "this is lowkey embarrassing for you 😭",
-            "you’re definitely smiling right now"
-        ]))
+#        st.write(random.choice([
+#            "don’t be dramatic 🙄",
+#            "this could’ve been over 10 minutes ago btw",
+#            "you miss me. let’s not lie today.",
+#            "this is lowkey embarrassing for you 😭",
+#            "you’re definitely smiling right now"
+#       ]))
 
 # ---- STEP 3 ----
 elif st.session_state.page == "step3":
