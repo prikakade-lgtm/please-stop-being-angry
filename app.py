@@ -217,11 +217,6 @@ elif st.session_state.page == "step3":
 # ---- FINAL ----
 elif st.session_state.page == "final":
 
-    if st.session_state.last_page != "final":
-        st.session_state.wrong_clicks = 0
-
-    st.session_state.last_page = "final"
-
     st.markdown("<h2>final decision 🎲</h2>", unsafe_allow_html=True)
     st.image("https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif", width=220)
 
@@ -229,52 +224,55 @@ elif st.session_state.page == "final":
 
     st.video("https://www.youtube.com/watch?v=uxpDa-c-4Mc")
 
+    # ---- RESPONSE SYSTEM (NO REPEATS) ----
+    def get_response():
+        if "responses_pool" not in st.session_state:
+            st.session_state.responses_pool = [
+                "no 😭",
+                "wrong choice.",
+                "try again.",
+                "you know that’s not the one.",
+                "be serious.",
+                "this is embarrassing 😭",
+                "you’re doing this on purpose.",
+                "why are you like this.",
+                "HELLO??",
+                "this is not a game.",
+                "call me.",
+                "i know you see the right button.",
+                "stop avoiding it.",
+                "this is painful to watch.",
+                "just press the right one 😭"
+            ]
+            st.session_state.used_responses = []
+
+        # reset when exhausted
+        if len(st.session_state.responses_pool) == 0:
+            st.session_state.responses_pool = st.session_state.used_responses
+            st.session_state.used_responses = []
+
+        choice = random.choice(st.session_state.responses_pool)
+        st.session_state.responses_pool.remove(choice)
+        st.session_state.used_responses.append(choice)
+
+        return choice
+
+    # ---- CALL BUTTON ----
     if st.button("call me. now. 📞"):
         st.markdown(
             '<meta http-equiv="refresh" content="0; url=tel:+919819271926">',
             unsafe_allow_html=True
         )
 
-    def get_response(level):
-        if level <= 2:
-            return random.choice([
-                "no 😭",
-                "wrong choice.",
-                "try again.",
-                "you know that’s not the one."
-            ])
-        elif level <= 4:
-            return random.choice([
-                "this is getting embarrassing 😭",
-                "you’re doing this on purpose now.",
-                "why are you like this."
-            ])
-        elif level <= 6:
-            return random.choice([
-                "HELLO??",
-                "this is not a game anymore.",
-                "call. me."
-            ])
-        elif level <= 8:
-            return random.choice([
-                "this is psychological warfare.",
-                "i’m judging you heavily right now."
-            ])
-        else:
-            return random.choice([
-                "this is your villain origin story.",
-                "just call me. please 😭"
-            ])
-
+    # ---- WRONG OPTIONS ----
     if st.button("be stubborn 😤"):
-        st.session_state.wrong_clicks += 1
-        show_message(get_response(st.session_state.wrong_clicks))
+        show_message(get_response())
         st.rerun()
 
     if st.button("be a bitch 😡"):
-        st.session_state.wrong_clicks += 1
-        show_message(get_response(st.session_state.wrong_clicks))
+        show_message(get_response())
         st.rerun()
 
+    # ---- DISPLAY MESSAGE ----
     if st.session_state.message:
         st.write(st.session_state.message)
