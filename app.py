@@ -24,6 +24,7 @@ html, body, .stApp {
 
 h1, h2 { color: black; }
 
+/* BUTTONS */
 .stButton>button {
     background-color: #ff4d6d;
     color: white !important;
@@ -43,10 +44,9 @@ h1, h2 { color: black; }
     background-color: #e6395c;
 }
 
-/* RADIO TEXT BLACK */
-div[role="radiogroup"] label {
+/* FORCE RADIO TEXT BLACK */
+div[role="radiogroup"] * {
     color: black !important;
-    font-weight: 600;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -58,7 +58,6 @@ if "page" not in st.session_state:
 if "message" not in st.session_state:
     st.session_state.message = ""
 
-# ---- HELPERS ----
 def show_message(text):
     st.session_state.message = text
 
@@ -117,7 +116,7 @@ elif st.session_state.page == "step2":
         key="radio_q"
     )
 
-    if st.button("submit", key="submit_btn"):
+    if st.button("submit"):
         if choice.startswith("no"):
             show_message("no?? 😭 be serious. we both know that’s not true.\nthis attitude is not convincing anyone btw 🙄")
 
@@ -175,26 +174,30 @@ elif st.session_state.page == "final":
     st.image("https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif", width=220)
 
     st.write("i don’t care about being right… i just don’t like us like this.")
-    st.write("stop being stubborn and just call me.")
 
     st.video("https://www.youtube.com/watch?v=uxpDa-c-4Mc")
 
-    if st.button("call me. now. 📞"):
-        st.session_state.page = "call"
-        st.rerun()
+    # DIRECT CALL BUTTON
+    st.markdown("[📞 call me now](tel:+919819271926)")
 
-# ---- CALL ----
-elif st.session_state.page == "call":
-    st.markdown("<h1>📞 incoming call…</h1>", unsafe_allow_html=True)
-    st.image("https://media.giphy.com/media/3o6ZtaO9BZHcOjmErm/giphy.gif", width=200)
+    # WRONG OPTIONS (kept for fun)
+    if st.button("be stubborn 😤"):
+        show_message(random.choice([
+            "no 😭",
+            "wrong choice.",
+            "try again.",
+            "you know that’s not the one.",
+            "don’t do this."
+        ]))
 
-    st.write("you have no choice now 😌")
+    if st.button("try your luck again 🎲"):
+        show_message(random.choice([
+            "call her.",
+            "call her now.",
+            "still call her.",
+            "why are you still here? 😭",
+            "just press the call button."
+        ]))
 
-    time.sleep(1)
-    st.write("connecting…")
-
-    time.sleep(1)
-
-    st.markdown("💖 💕 💗 💓 💞 💘 💝 💖")
-
-    st.success("good decision. call me.")
+    if st.session_state.message:
+        st.write(st.session_state.message)
